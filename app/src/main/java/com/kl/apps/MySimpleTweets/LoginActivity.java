@@ -1,11 +1,12 @@
-package com.codepath.apps.restclienttemplate;
+package com.kl.apps.MySimpleTweets;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+import com.kl.apps.MySimpleTweets.R;
+import com.kl.apps.MySimpleTweets.RestClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-import com.codepath.oauth.OAuthLoginActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
 

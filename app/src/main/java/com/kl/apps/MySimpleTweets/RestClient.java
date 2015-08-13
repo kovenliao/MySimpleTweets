@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.kl.apps.MySimpleTweets;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.FlickrApi;

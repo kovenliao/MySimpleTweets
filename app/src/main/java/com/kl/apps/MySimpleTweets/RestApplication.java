@@ -1,6 +1,8 @@
-package com.codepath.apps.restclienttemplate;
+package com.kl.apps.MySimpleTweets;
 
 import android.content.Context;
+
+import com.kl.apps.MySimpleTweets.RestClient;
 
 /*
  * This is the Android application itself and is used to configure various settings
