@@ -2,10 +2,12 @@ package com.kl.apps.MySimpleTweets;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.FlickrApi;
+import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
+import com.kl.apps.MySimpleTweets.data.QueryReq;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -21,14 +23,14 @@ import com.loopj.android.http.RequestParams;
  * NOTE: You may want to rename this object based on the service i.e TwitterClient or FlickrClient
  * 
  */
-public class RestClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = FlickrApi.class; // Change this
-	public static final String REST_URL = "http://api.flickr.com/services"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "SOME_KEY";       // Change this
-	public static final String REST_CONSUMER_SECRET = "SOME_SECRET"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://cprest"; // Change this (here and in manifest)
+public class TwitterClient extends OAuthBaseClient {
+	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+	public static final String REST_CONSUMER_KEY = "lVepe3bUU7CCwIqGuWfASQDkz";       // Change this
+	public static final String REST_CONSUMER_SECRET = "cxM4hBDw3xgXAmWDCnDMK43D3CDK6mnvZ1dCRAhXXj9LXc2wt3"; // Change this
+	public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets"; // Change this (here and in manifest)
 
-	public RestClient(Context context) {
+	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
@@ -40,6 +42,29 @@ public class RestClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("format", "json");
 		client.get(apiUrl, params, handler);
+	}
+
+	public void getHomeTimeLine(QueryReq queryReq, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", queryReq.getCount());
+		params.put("since_id", queryReq.getSinceId());
+		getClient().get(apiUrl, params, handler);
+
+	}
+
+	// Composing a Tweet
+	public void getAccountCredentials(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		RequestParams params = new RequestParams();
+		getClient().get(apiUrl, params, handler);
+	}
+
+	public void postTweet(String message, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", message);
+		getClient().post(apiUrl, params, handler);
 	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
